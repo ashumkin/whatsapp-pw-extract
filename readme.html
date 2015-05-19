@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]>	<html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>		<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>		<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>		<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en-US" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" prefix="og: http://ogp.me/ns#" class="no-js"> <!--<![endif]-->
+<head>
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="HandheldFriendly" content="true">
+
+<link rel="profile" href="http://gmpg.org/xfn/11">
+
+
+
+
+<!-- STYLESHEET INIT -->
+<link href="http://www.digitalinternals.com/wp-content/themes/infimag/style.css" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+
+
+
+<!-- favicon.ico location -->
+<link rel="icon" href="http://static.digitalinternals.com/wp-content/uploads/tn_infimag_fav_icon.jpg" type="images/x-icon" />
+
+<link rel="pingback" href="http://www.digitalinternals.com/xmlrpc.php" />
+
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<!--[if gte IE 9]>
+<style type="text/css">
+</style>
+<![endif]-->
+
+
+<style type='text/css'>
+					.no-break br {
+						display: none !important;
+					}
+			</style>
+<style type='text/css' media='all'>
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fontawesome/font/fontawesome-webfont.eot');
+  src: url('http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fontawesome/font/fontawesome-webfont.eot?#iefix') format('eot'), url('http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fontawesome/font/fontawesome-webfont.woff') format('woff'), url('http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fontawesome/font/fontawesome-webfont.ttf') format('truetype'), url('http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fontawesome/font/fontawesome-webfont.otf') format('opentype'), url('http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fontawesome/font/fontawesome-webfont.svg#FontAwesome') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+</style>
+
+
+
+<!-- This site is optimized with the Yoast WordPress SEO plugin v2.1.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<title>Extract WhatsApp Password on Android - Digital Internals</title>
+<meta name="description" content="How to extract WhatsApp password from an Android phone. You will need adb, hexdump, gcc, xdd and ssl development library. Basic knowledge of Linux and Android required."/>
+<link rel="canonical" href="http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Extract WhatsApp Password on Android - Digital Internals" />
+<meta property="og:description" content="How to extract WhatsApp password from an Android phone. You will need adb, hexdump, gcc, xdd and ssl development library. Basic knowledge of Linux and Android required." />
+<meta property="og:url" content="http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/" />
+<meta property="og:site_name" content="Digital Internals" />
+<meta property="article:author" content="https://facebook.com/ibrahimayoob" />
+<meta property="article:tag" content="android,hack,linux,password,whatsapp" />
+<meta property="article:section" content="security" />
+<meta property="article:published_time" content="2014-09-08T17:36:04+00:00" />
+<meta property="article:modified_time" content="2015-02-14T21:29:59+00:00" />
+<meta property="og:updated_time" content="2015-02-14T21:29:59+00:00" />
+<meta property="og:image" content="http://static.digitalinternals.com/wp-content/uploads/2014/02/whatsapp-android-sign.jpg" />
+<script type='application/ld+json'>{"@context":"http:\/\/schema.org","@type":"WebSite","url":"http:\/\/www.digitalinternals.com\/","name":"Digital Internals"}</script>
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Digital Internals &raquo; Feed" href="http://www.digitalinternals.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Digital Internals &raquo; Comments Feed" href="http://www.digitalinternals.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Digital Internals &raquo; Extract WhatsApp Password on Android Comments Feed" href="http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/feed/" />
+<link rel='stylesheet' id='crayon-css'  href='http://www.digitalinternals.com/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-github-css'  href='http://www.digitalinternals.com/wp-content/plugins/crayon-syntax-highlighter/themes/github/github.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monospace-css'  href='http://www.digitalinternals.com/wp-content/plugins/crayon-syntax-highlighter/fonts/monospace.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='fb_data_style-css'  href='http://www.digitalinternals.com/wp-content/plugins/feedburner-form/control/fbstyle.css?ver=4.1.5' type='text/css' media='all' />
+<link rel='stylesheet' id='arevico_scsfbcss-css'  href='http://www.digitalinternals.com/wp-content/plugins/facebook-page-promoter-lightbox/includes/front/scs/scs.css?ver=4.1.5' type='text/css' media='all' />
+<link rel='stylesheet' id='superfish-css'  href='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/superfish-menu/css/superfish.css?ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='tabber-css'  href='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/tabber/tabber.css?ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='fancybox-css-css'  href='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fancybox/jquery.fancybox-1.3.4.css?ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-css'  href='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fontawesome/css/font-awesome.css?ver=1.0' type='text/css' media='all' />
+<link rel='stylesheet' id='metro_style_social_widget-css'  href='http://www.digitalinternals.com/wp-content/plugins/metro-style-social-widget/CSS/metro.css?ver=4.1.5' type='text/css' media='all' />
+<link rel='stylesheet' id='tablepress-default-css'  href='http://www.digitalinternals.com/wp-content/plugins/tablepress/css/default.min.css?ver=1.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wpcirrus-cloudStyle-css'  href='http://www.digitalinternals.com/wp-content/plugins/wp-cirrus/cirrusCloud.css?ver=0.6.11' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/plugins/wp-cirrus/wp_cirrus_gwt/wp_cirrus_gwt.nocache.js?ver=0.6.11'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-includes/js/jquery/jquery.js?ver=1.11.1'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.digitalinternals.com\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/plugins/facebook-page-promoter-lightbox/includes/front/scs/scs.js?ver=4.1.5'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var lb_l_ret = {"width":"400","height":"255","delay":"1000","coc":"0","fb_id":"160284070672603","cooc":"0","display_on_page":"1","display_on_post":"1","display_on_homepage":"1","display_on_archive":"1","show_once":"7"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/plugins/facebook-page-promoter-lightbox/includes/front/js/launch.js?ver=4.1.5'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/modernizr/modernizr.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/tabber/tabber.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/superfish-menu/js/superfish.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/superfish-menu/js/supersubs.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/transit/jquery.transit.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fancybox/jquery.mousewheel-3.0.4.pack.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/themes/infimag/lib/scripts/fancybox/jquery.fancybox-1.3.4.pack.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-content/plugins/google-analyticator/external-tracking.min.js?ver=6.4.8'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.digitalinternals.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.digitalinternals.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='shortlink' href='http://www.digitalinternals.com/?p=374' />
+<link rel="stylesheet" type="text/css" href="http://www.digitalinternals.com/wp-content/plugins/cforms/styling/cforms2012.css" />
+<script type="text/javascript" src="http://www.digitalinternals.com/wp-content/plugins/cforms/js/cforms.js"></script>
+<script charset="utf-8" type="text/javascript">var switchTo5x=true;</script>
+<script charset="utf-8" type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script charset="utf-8" type="text/javascript">stLight.options({"publisher":"6967c811-0313-4a56-9127-0711bc98f8f4","doNotCopy":true,"hashAddressBar":false,"doNotHash":true});var st_type="wordpress3.9.2";</script>
+<style type='text/css' media='all'></style><style type='text/css' media='screen'> .gravatar_recent_comment li, .twitterbox li { padding:0px; font-size: 1.025em; line-height:1.5em;  }
+
+
+.twitterbox span { width:100%; float:left; margin: 0; display:block; }
+#custom .twitterbox li { padding:0;background-image:none !important;margin: 0 0 1em; }
+
+.twitterbox li.followme a, li.flickrmore a { width:auto; float:left; margin: 1em 0 0; padding:0 0 0.2em;border-bottom: 1px dotted #ccc; }
+
+.gravatar_recent_comment span.author { font-weight:bold; }
+.gravatar_recent_comment img { width:32px; height:32px; float:left; margin: 0 10px 0 0; }
+
+#flickr-widget .flickr_badge_image { background: transparent none; border: 0px none; float:left; margin: 0 5px 5px; }
+
+#footer #flickr-widget {
+width: 100% !important;
+display: block;
+padding: 0 !important;
+}
+
+#flickr-widget li { width:100%;margin:0px !important;padding:0px !important; }
+
+.social_profile {width:100%;float:left;margin:0px !important;padding:1em 0 0 !important;}
+.social_profile .sc_profile {position:relative;width:45%;float:left;margin:1em 0 0 !important;padding:0px 2% 0 !important;}
+.social_profile .sc_profile img { width:32px; height:32px; float:left; margin: 0 10px 0 0; }
+.social_profile .sc_profile .sc_counter { }
+.social_profile .sc_profile .sc_counter h4 { font-size: 1.5em; line-height:100%; margin:0 !important; }
+.my_contactform em.error { color: #cc0000; }
+</style><style type="text/css" id="syntaxhighlighteranchor"></style>
+<!-- Google Analytics Tracking by Google Analyticator 6.4.8: http://www.videousermanuals.com/google-analyticator/ -->
+<script type="text/javascript">window.google_analytics_uacct = "UA-8293632-1";</script>
+<script type="text/javascript">
+    var analyticsFileTypes = [''];
+    var analyticsSnippet = 'disabled';
+    var analyticsEventTracking = 'enabled';
+</script>
+<script type="text/javascript">
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-8293632-1', 'auto');
+	ga('require', 'linkid', 'linkid.js');
+	ga('require', 'displayfeatures');
+ 
+	ga('send', 'pageview');
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+document.write('<style type="text/css">.tabber{display:none;}<\/style>');
+//]]>
+</script>
+
+<script type="text/javascript">
+jQuery.noConflict();
+var $sf = jQuery;
+    $sf(document).ready(function(){
+        $sf("ul.sf-menu").supersubs({
+            minWidth:    15,   // minimum width of sub-menus in em units
+            maxWidth:    20,   // maximum width of sub-menus in em units
+            extraWidth:  1     // extra width can ensure lines don't sometimes turn over
+                               // due to slight rounding differences and font-family
+        }).superfish();  // call supersubs first, then superfish, so that subs are
+                         // not display:none when measuring. Call before initialising
+                         // containing tabs for same reason.
+    });
+</script>
+
+
+
+
+
+<script type="text/javascript">
+jQuery.noConflict();
+var $fc = jQuery;
+$fc(document).ready(function() {
+$fc("a[rel=gallery_group]").fancybox({
+				'transitionIn'		: 'none',
+				'transitionOut'		: 'none',
+				'titlePosition' 	: 'over',
+				'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+					return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+				}
+			});
+});
+</script>
+
+
+<script type="text/javascript">
+jQuery.noConflict();
+var $sb = jQuery;
+$sb(document).ready(function() {
+   $sb('#socialboxes a').hover(function() {
+		$sb(this).animate({ marginTop: '-5px' }, 100);
+	}, function() {
+		$sb(this).animate({ marginTop: '0px' }, 100);
+	}); // Menu simple animation
+});
+</script>
+
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+jQuery('#right-sidebar #wp-calendar').wrap('<div class="extra-block">');
+jQuery('#right-sidebar .widget_categories select').wrap('<div class="extra-block">');
+jQuery('#right-sidebar .widget_archive select').wrap('<div class="extra-block">');
+});
+</script>
+
+
+<style type='text/css' media='all'>
+
+
+body { font-family: Ubuntu !important; }
+
+
+
+
+
+
+
+h1,h2,h3,h4,h5,h6,.header-title,#main-navigation, #featured #featured-title, #cf .tinput, #wp-calendar caption,.flex-caption h1,#portfolio-filter li,.nivo-caption a.read-more,.form-submit #submit,.fbottom,ol.commentlist li div.comment-post-meta, .home-post span.post-category a,ul.tabbernav li a {
+font-family:  Trebuchet MS !important; }
+
+
+#main-navigation, .sf-menu li a { font-family:  Lucida Console !important; }
+
+
+</style>
+</head>
+
+<body class="single single-post postid-374 single-format-standard unknown" id="custom">
+
+
+<div id="wrapper">
+
+<div id="wrapper-main">
+
+<div id="bodywrap" class="innerwrap">
+<div id="bodycontent">
+
+
+<!-- CONTAINER START -->
+<section id="container">
+
+<div class="container-wrap">
+
+<!-- HEADER START -->
+<header class="iegradient" id="header" role="banner">
+<div class="header-inner">
+<div class="innerwrap">
+
+<div id="siteinfo">
+<a href="http://www.digitalinternals.com/" title="Digital Internals"><img src="http://static.digitalinternals.com/wp-content/uploads/tn_infimag_header_logo.jpg" alt="Digital Internals" /></a>
+</div><!-- SITEINFO END -->
+<div id="header-right">
+<div class="social-and-search">
+<div id="socialbox">
+
+<p class="rss"><a title="Subscribe to rss feed" href="//feeds.digitalinternals.com/digitalinternals">&nbsp;</a></p>
+
+<p class="facebook"><a title="Like us on Facebook" href="//www.facebook.com/digitalinternals">&nbsp;</a></p>
+
+
+<p class="twitter"><a title="Follow us on Twitter" href="//twitter.com/digitalinternal">&nbsp;</a></p>
+
+
+
+
+<p class="gplus"><a title="Check out our Google Plus profile" href="//plus.google.com/+digitalinternals">&nbsp;</a></p>
+
+</div><form role="search" method="get" id="searchform" action="http://www.digitalinternals.com/">
+<div><label class="screen-reader-text" for="s">Search for:</label>
+<input type="text" id="s" name="s" value="Type and Press Enter" onfocus="if (this.value == 'Type and Press Enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Type and Press Enter';}" tabindex="1" /></div></form>
+</div>
+</div>
+</div>
+</div><!-- end header-inner -->
+</header>
+<!-- HEADER END -->
+
+
+
+<!-- NAVIGATION START -->
+<nav class="iegradient" id="main-navigation" role="navigation">
+<div class="innerwrap">
+<ul id="menu-main-menu" class="sf-menu"><li id='menu-item-236'  class="menu-item menu-item-type-custom menu-item-object-custom no_desc"><a  href="/">Home<br /><span class="menu-decsription"></span></a> </li>
+<li id='menu-item-239'  class="menu-item menu-item-type-post_type menu-item-object-page no_desc"><a  href="http://www.digitalinternals.com/about/">About<br /><span class="menu-decsription"></span></a> </li>
+<li id='menu-item-238'  class="menu-item menu-item-type-post_type menu-item-object-page no_desc"><a  href="http://www.digitalinternals.com/archives/">Archives<br /><span class="menu-decsription"></span></a> </li>
+<li id='menu-item-237'  class="menu-item menu-item-type-post_type menu-item-object-page no_desc"><a  href="http://www.digitalinternals.com/contact/">Contact<br /><span class="menu-decsription"></span></a> </li>
+</ul><div id="mobile-nav">
+<script type="text/javascript">
+ jQuery(document).ready(function(jQuery){
+  jQuery("select#top-dropdown").change(function(){
+    window.location.href = jQuery(this).val();
+  });
+ });
+</script><select name="top-dropdown" id="top-dropdown"><option>Where to?</option><option value='/'>Home</option>
+<option value='http://www.digitalinternals.com/about/'>About</option>
+<option value='http://www.digitalinternals.com/archives/'>Archives</option>
+<option value='http://www.digitalinternals.com/contact/'>Contact</option>
+</select></div>
+</div>
+</nav>
+<!-- NAVIGATION END -->
+
+
+
+<!-- CONTENT START -->
+<div class="content">
+<div class="content-inner">
+
+
+<!-- POST ENTRY START -->
+<div id="post-entry">
+<section class="post-entry-inner">
+
+
+<!-- POST START -->
+<article class="post-374 post type-post status-publish format-standard has-post-thumbnail hentry category-security tag-android tag-hack tag-linux tag-password tag-whatsapp post-single has_thumb" id="post-374" rel="author">
+
+<div class="post-top">
+<h1 class="post-title">Extract WhatsApp Password on Android</h1>
+<div class="post-meta the-icons pmeta-alt">
+
+
+<span class="post-author">Posted by <a href="http://www.digitalinternals.com/author/ibrahim/" title="Posts by Mohamed Ibrahim" rel="author">Mohamed Ibrahim</a> </span>
+<span class="post-time">on 08 September 2014</span>
+
+
+
+&nbsp;&nbsp;&nbsp;<span class="post-tags">Tags:&nbsp;<a href="http://www.digitalinternals.com/tag/android/" rel="tag">android</a>, <a href="http://www.digitalinternals.com/tag/hack/" rel="tag">hack</a>, <a href="http://www.digitalinternals.com/tag/linux/" rel="tag">linux</a>, <a href="http://www.digitalinternals.com/tag/password/" rel="tag">password</a>, <a href="http://www.digitalinternals.com/tag/whatsapp/" rel="tag">whatsapp</a></span>
+
+
+
+
+
+
+
+</div><div class="sharebox-wrap">
+</div>
+</div>
+
+<div class="post-content">
+<div class="adsense-single"><div id="google-linkads-single-1"></div>     
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- di.com#single_lu_01 -->
+<script>
+ 
+/* calculate the width of available ad space */
+ad = document.getElementById('google-linkads-single-1');    
+ 
+var adWidth = (typeof ad.getBoundingClientRect === 'function') ? ad.getBoundingClientRect().width : ad.offsetWidth;    
+ 
+/* Replace ca-pub-XXX with your AdSense Publisher ID */
+google_ad_client = "ca-pub-3458162586830183";    
+
+if ( adWidth >= 728 )      google_ad_param = ["728", "15", "8766851752"]; 
+else if ( adWidth >= 468 ) google_ad_param = ["468", "15", "2720318158"]; 
+else if ( adWidth >= 200 ) google_ad_param = ["200", "90", "4197051352"]; 
+else if ( adWidth >= 180 ) google_ad_param = ["180", "90", "7150517751"]; 
+else if ( adWidth >= 160 ) google_ad_param = ["160", "90", "8627250953"]; 
+else                       google_ad_param = ["120", "90", "1103984154"];    
+ 
+document.write (
+'<ins class="adsbygoogle" style="display:inline-block;'
++ 'width:' + google_ad_param[0] + 'px;' 
++ 'height:' + google_ad_param[1] + 'px' 
++ '" data-ad-client="' + google_ad_client 
++ '" data-ad-slot="' + google_ad_param[2] 
++ '"></ins>'
+);
+(adsbygoogle = window.adsbygoogle || []).push({});
+ 
+</script>
+</div>
+
+<!-- Easy Plugin for AdSense V8.20 -->
+<!-- [leadin: 0 urCount: 0 urMax: 0] -->
+<div class="ezAdsense adsense adsense-leadin" style="text-align:left;margin:0px;"><div id="google-ads-single-1"></div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- di.com#single_au_01 -->
+ 
+<script type="text/javascript">     
+
+ad = document.getElementById('google-ads-single-1');
+ 
+if (ad.getBoundingClientRect().width) {
+adWidth = ad.getBoundingClientRect().width; // for modern browsers
+} else {
+adWidth = ad.offsetWidth; // for old IE
+}     
+
+google_ad_client = "ca-pub-3458162586830183";     
+
+google_ad_slot = "5313857755";
+
+if ( adWidth >= 728 )
+    google_ad_size = ["728", "90"]; /* Leaderboard 728x90 */
+else if ( adWidth >= 468 )
+    google_ad_size = ["468", "60"]; /* Banner (468 x 60) */
+else if ( adWidth >= 336 )
+    google_ad_size = ["336", "280"]; /* Large Rectangle (336 x 280) */
+else if ( adWidth >= 300 )
+    google_ad_size = ["300", "250"]; /* Medium Rectangle (300 x 250) */
+else if ( adWidth >= 250 )
+    google_ad_size = ["250", "250"]; /* Square (250 x 250) */
+else if ( adWidth >= 200 )
+    google_ad_size = ["200", "200"]; /* Small Square (200 x 200) */
+else if ( adWidth >= 180 )
+    google_ad_size = ["180", "150"]; /* Small Rectangle (180 x 150) */
+else
+    google_ad_size = ["125", "125"]; /* Button (125 x 125) */
+ 
+document.write (
+'<ins class="adsbygoogle" style="display:inline-block;width:'
++ google_ad_size[0] + 'px;height:'
++ google_ad_size[1] + 'px" data-ad-client="'
++ google_ad_client + '" data-ad-slot="'
++ google_ad_slot + '"></ins>'
+);
+(adsbygoogle = window.adsbygoogle || []).push({});
+ 
+</script>
+</div>
+<!-- Easy Plugin for AdSense V8.20 -->
+<p>WhatsApp uses a customised version of XMPP (Extensible Messaging and Presence Protocol) as the communication protocol. Upon installation, it creates a user account using one&#8217;s phone number (with country code prefix) as the username (Jabber ID: <code>[phone number]@s.whatsapp.net</code>). A password is generated using an unknown algorithm on the server end and sent to the client. Previously the password was derived from the phone&#8217;s IMEI or the WiFi MAC address.</p><span id="more-374"></span>
+
+<p>On Android, WhatsApp stores both the username and password in 2 separate files kept in the private storage area. The &#8220;<code>me</code>&#8221; file stores the username or Jabber ID and the &#8220;<code>pw</code>&#8221; file stores the password.</p>
+
+<pre class="prettyprint lang-bash">
+&#47;data&#47;data&#47;com.whatsapp&#47;files&#47;me
+&#47;data&#47;data&#47;com.whatsapp&#47;files&#47;pw
+</pre>
+
+<p>The files are stored in a Java serialized object format. The password field is also encrypted (as usual!).</p>
+
+<h2>Extract WhatsApp Password File</h2>
+
+<p>There are two ways to extract this file. The first method requires a rooted phone. Using ADB shell, switch to root and copy the file to the SD card.</p>
+
+<pre class="prettyprint">
+$ adb shell
+android$ su
+android# cp &#47;data&#47;data&#47;com.whatsapp&#47;files&#47;pw &#47;sdcard
+android# exit
+android$ exit
+</pre>
+
+<p>Once the file has been copied to the SD card, use ADB again to copy it to your computer.</p>
+
+<pre class="prettyprint">
+$ adb pull &#47;sdcard&#47;pw
+</pre>
+
+<p><del datetime="2015-02-14T13:27:11+00:00">The second method is to use the ADB backup feature. This is your only option if your phone is not rooted.</del> For more detailed information on performing backups using ADB, read this article &#8211; <a href="http://www.digitalinternals.com/mobile/android-adb-backup-extract-restore-repack/372/" class="permalink-shortcode" title="Android ADB Backup, Extract, Restore">Android ADB Backup, Extract, Restore</a>.</p>
+
+<del datetime="2015-02-14T13:27:11+00:00">
+<pre class="prettyprint">
+$ adb backup -f com.whatsapp.ab -noapk com.whatsapp
+</pre>
+</del>
+
+<p><del datetime="2015-02-14T13:27:11+00:00">Convert the Android Backup file into a TAR archive.</del></p>
+
+<del datetime="2015-02-14T13:27:11+00:00">
+<pre class="prettyprint">
+$ dd if=com.whatsapp.ab ibs=24 skip=1 | openssl zlib -d &gt; com.whatsapp.tar
+</pre>
+</del>
+
+<p><del datetime="2015-02-14T13:27:11+00:00">Next, extract the password file and move it to the current working directory.</del></p>
+
+<del datetime="2015-02-14T13:27:11+00:00">
+<pre class="prettyprint">
+$ tar xf com.whatsapp.tar apps&#47;com.whatsapp&#47;f&#47;pw
+$ mv apps&#47;com.whatsapp&#47;f&#47;pw .
+</pre>
+</del>
+
+<p>The password file is 69 bytes in size. I guess it should be the same size for everyone.</p>
+
+<h2>Extract Decryption Keys</h2>
+
+<p>We will need to extract 3 keys from the password file: <code>salt</code>, <code>IV</code> and the encrypted key. The <code>salt</code> is a 4 byte number found within offset 0x1D and 0x20. Offsets start from 0x00. Extract the <code>salt</code> using <code>dd</code> command.</p>
+
+<pre class="prettyprint">
+$ dd if=pw bs=1 skip=29 count=4 &gt; pw_salt
+</pre>
+
+<p>The above will give a 4-byte or 32 bit <code>salt</code> value. For a hex dump of the value, use <code>hexdump</code>.</p>
+
+<pre class="prettyprint">
+$ hexdump -e &#39;2&#47;1 &#34;%02x&#34;&#39; pw_salt
+</pre>
+
+<p>The IV or the initialisation vector is a 16-byte or 128-bit value found within offset 0x21 and 0x30. Let&#8217;s extract the <code>IV</code> with <code>dd</code> command.</p>
+
+<pre class="prettyprint">
+$ dd if=pw bs=1 skip=33 count=16 &gt; pw_iv
+</pre>
+
+<p>Finally, extract the encrypted key. It&#8217;s a 20-byte or 160-bit number. Offset is between 0x31 and 0x44 (or end of file).</p>
+
+<pre class="prettyprint">
+$ dd if=pw bs=1 skip=49 count=20 &gt; pw_ekey
+</pre>
+
+
+<!-- Easy Plugin for AdSense V8.20 -->
+<!-- [midtext: 1 urCount: 1 urMax: 0] -->
+<div class="ezAdsense adsense adsense-midtext" style="text-align:left;margin:0px;"><div id="google-ads-single-2"></div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- di.com#single_au_02 -->
+ 
+<script type="text/javascript">     
+
+ad = document.getElementById('google-ads-single-2');
+ 
+if (ad.getBoundingClientRect().width) {
+adWidth = ad.getBoundingClientRect().width; // for modern browsers
+} else {
+adWidth = ad.offsetWidth; // for old IE
+}     
+
+google_ad_client = "ca-pub-3458162586830183";     
+
+google_ad_slot = "5174256953";
+
+if ( adWidth >= 728 )
+    google_ad_size = ["728", "90"]; /* Leaderboard 728x90 */
+else if ( adWidth >= 468 )
+    google_ad_size = ["468", "60"]; /* Banner (468 x 60) */
+else if ( adWidth >= 336 )
+    google_ad_size = ["336", "280"]; /* Large Rectangle (336 x 280) */
+else if ( adWidth >= 300 )
+    google_ad_size = ["300", "250"]; /* Medium Rectangle (300 x 250) */
+else if ( adWidth >= 250 )
+    google_ad_size = ["250", "250"]; /* Square (250 x 250) */
+else if ( adWidth >= 200 )
+    google_ad_size = ["200", "200"]; /* Small Square (200 x 200) */
+else if ( adWidth >= 180 )
+    google_ad_size = ["180", "150"]; /* Small Rectangle (180 x 150) */
+else
+    google_ad_size = ["125", "125"]; /* Button (125 x 125) */
+ 
+document.write (
+'<ins class="adsbygoogle" style="display:inline-block;width:'
++ google_ad_size[0] + 'px;height:'
++ google_ad_size[1] + 'px" data-ad-client="'
++ google_ad_client + '" data-ad-slot="'
++ google_ad_slot + '"></ins>'
+);
+(adsbygoogle = window.adsbygoogle || []).push({});
+ 
+</script>
+</div>
+<!-- Easy Plugin for AdSense V8.20 -->
+<p>Now you will have 3 files containing each of the 3 keys: <code>pw_salt</code>, <code>pw_iv</code> and <code>pw_ekey</code>.</p>
+
+<h2>Decrypt WhatsApp Password</h2>
+
+<p>Decryption is done in 2 steps. First, we need to use the <code>PBKDF2</code> key derivation function. This function needs a pass phrase that is derived from a known key and the WhatsApp username. First, create the pass phrase file &#8220;<code>pbkdf2_pass.bin</code>&#8221; with the known key using <code>xxd</code> &#8211; a tool to create a binary file from a hex dump.</p>
+
+<pre class="prettyprint">
+$ echo c2991ec29b1d0cc2b8c3b7556458c298c29203c28b45c2973e78c386c395 | xxd -r -p &gt; pbkdf2_pass.bin
+</pre>
+
+<p>Next, append the username or your mobile number to the pass phrase. The number must be in international format but without the <code>+</code> sign. So, if your country code is <code>+65</code> and if your mobile number is <code>91234567</code>, the username becomes <code>6591234567</code>.</p>
+
+<pre class="prettyprint">
+$ echo -n 6591234567 | hexdump -e &#39;2&#47;1 &#34;%02x&#34;&#39; | xxd -r -p &gt;&gt; pbkdf2_pass.bin
+</pre>
+
+<p>Now, we have the inputs for the <code>PBKDF2</code> function. The <code>PBKDF2</code> function needs a small C program as <code>openssl</code> does not seem to support it from the command line.</p>
+
+<!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555afad3e9d96677588444" class="crayon-syntax crayon-theme-github crayon-font-monospace crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-always" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title"></span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">C</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;openssl/x509.h&gt;
+#include &lt;openssl/evp.h&gt;
+#include &lt;openssl/hmac.h&gt;
+
+int main(int argc, char *argv[])
+{
+	unsigned char pass[1024];      // passphrase read from stdin
+	unsigned char salt[1024];      // salt 
+	int salt_len;                  // salt length
+	int ic;                        // iteration
+	unsigned char result[1024];    // result
+	FILE *fp_salt;
+
+	if ( argc != 3 ) {
+		fprintf(stderr, "usage: %s salt_file iteration &lt; passwd_file &gt; binary_key_file \n", argv[0]);
+		exit(1);
+	}
+
+	ic = atoi(argv[2]);
+  
+	fp_salt = fopen(argv[1], "r");
+	if(!fp_salt) {
+		fprintf(stderr, "error opening salt file: %s\n", argv[1]);
+		exit(2);
+	}
+
+	salt_len=0;
+	int ch;	
+	while((ch = fgetc(fp_salt)) != EOF) {		
+		salt[salt_len++] = (unsigned char)ch;		
+	}	
+
+    fclose(fp_salt);	
+   
+    fgets(pass, 1024, stdin);
+    if ( pass[strlen(pass)-1] == '\n' )
+		pass[strlen(pass)-1] = '\0';
+  
+	PKCS5_PBKDF2_HMAC_SHA1(pass, strlen(pass), salt, salt_len, ic, 16, result);
+
+	fwrite(result, 1, 16, stdout);
+
+	return(0);
+}</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-2">2</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-4">4</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-6">6</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-8">8</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-10">10</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-12">12</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-14">14</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-16">16</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-18">18</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-20">20</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-22">22</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-24">24</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-26">26</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-28">28</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-30">30</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-32">32</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-34">34</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-36">36</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-37">37</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-38">38</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-39">39</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-40">40</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-41">41</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-42">42</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-43">43</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-44">44</div><div class="crayon-num" data-line="crayon-555afad3e9d96677588444-45">45</div><div class="crayon-num crayon-striped-num" data-line="crayon-555afad3e9d96677588444-46">46</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555afad3e9d96677588444-1"><span class="crayon-p">#include &lt;stdio.h&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-2"><span class="crayon-p">#include &lt;string.h&gt;</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-3"><span class="crayon-p">#include &lt;openssl/x509.h&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-4"><span class="crayon-p">#include &lt;openssl/evp.h&gt;</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-5"><span class="crayon-p">#include &lt;openssl/hmac.h&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-6">&nbsp;</div><div class="crayon-line" id="crayon-555afad3e9d96677588444-7"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-8"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-9"><span class="crayon-h">	</span><span class="crayon-t">unsigned</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-v">pass</span><span class="crayon-sy">[</span><span class="crayon-cn">1024</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// passphrase read from stdin</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-10"><span class="crayon-h">	</span><span class="crayon-t">unsigned</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-v">salt</span><span class="crayon-sy">[</span><span class="crayon-cn">1024</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// salt </span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-11"><span class="crayon-h">	</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">salt_len</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// salt length</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-12"><span class="crayon-h">	</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">ic</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// iteration</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-13"><span class="crayon-h">	</span><span class="crayon-t">unsigned</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-v">result</span><span class="crayon-sy">[</span><span class="crayon-cn">1024</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// result</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-14"><span class="crayon-h">	</span><span class="crayon-v">FILE</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">fp_salt</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-15">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-16"><span class="crayon-h">	</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-h"> </span><span class="crayon-o">!=</span><span class="crayon-h"> </span><span class="crayon-cn">3</span><span class="crayon-h"> </span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-17"><span class="crayon-h">		</span><span class="crayon-e">fprintf</span><span class="crayon-sy">(</span><span class="crayon-v">stderr</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-s">"usage: %s salt_file iteration &lt; passwd_file &gt; binary_key_file \n"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-18"><span class="crayon-h">		</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-19"><span class="crayon-h">	</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-20">&nbsp;</div><div class="crayon-line" id="crayon-555afad3e9d96677588444-21"><span class="crayon-h">	</span><span class="crayon-v">ic</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">atoi</span><span class="crayon-sy">(</span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">2</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-22"><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-23"><span class="crayon-h">	</span><span class="crayon-v">fp_salt</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">fopen</span><span class="crayon-sy">(</span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">1</span><span class="crayon-sy">]</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-s">"r"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-24"><span class="crayon-h">	</span><span class="crayon-st">if</span><span class="crayon-sy">(</span><span class="crayon-o">!</span><span class="crayon-v">fp_salt</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-25"><span class="crayon-h">		</span><span class="crayon-e">fprintf</span><span class="crayon-sy">(</span><span class="crayon-v">stderr</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-s">"error opening salt file: %s\n"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">1</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-26"><span class="crayon-h">		</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">2</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-27"><span class="crayon-h">	</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-28">&nbsp;</div><div class="crayon-line" id="crayon-555afad3e9d96677588444-29"><span class="crayon-h">	</span><span class="crayon-v">salt_len</span><span class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-30"><span class="crayon-h">	</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">ch</span><span class="crayon-sy">;</span><span class="crayon-h">	</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-31"><span class="crayon-h">	</span><span class="crayon-st">while</span><span class="crayon-sy">(</span><span class="crayon-sy">(</span><span class="crayon-v">ch</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">fgetc</span><span class="crayon-sy">(</span><span class="crayon-v">fp_salt</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">!=</span><span class="crayon-h"> </span><span class="crayon-v">EOF</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-h">		</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-32"><span class="crayon-h">		</span><span class="crayon-v">salt</span><span class="crayon-sy">[</span><span class="crayon-v">salt_len</span><span class="crayon-o">++</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-t">unsigned</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-sy">)</span><span class="crayon-v">ch</span><span class="crayon-sy">;</span><span class="crayon-h">		</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-33"><span class="crayon-h">	</span><span class="crayon-sy">}</span><span class="crayon-h">	</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-34">&nbsp;</div><div class="crayon-line" id="crayon-555afad3e9d96677588444-35"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">fclose</span><span class="crayon-sy">(</span><span class="crayon-v">fp_salt</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h">	</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-36"><span class="crayon-h">&nbsp;&nbsp; </span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-37"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">fgets</span><span class="crayon-sy">(</span><span class="crayon-v">pass</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">1024</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">stdin</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-38"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-h"> </span><span class="crayon-v">pass</span><span class="crayon-sy">[</span><span class="crayon-e">strlen</span><span class="crayon-sy">(</span><span class="crayon-v">pass</span><span class="crayon-sy">)</span><span class="crayon-o">-</span><span class="crayon-cn">1</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-s">'\n'</span><span class="crayon-h"> </span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-39"><span class="crayon-h">		</span><span class="crayon-v">pass</span><span class="crayon-sy">[</span><span class="crayon-e">strlen</span><span class="crayon-sy">(</span><span class="crayon-v">pass</span><span class="crayon-sy">)</span><span class="crayon-o">-</span><span class="crayon-cn">1</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-s">'\0'</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-40"><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line" id="crayon-555afad3e9d96677588444-41"><span class="crayon-h">	</span><span class="crayon-e">PKCS5_PBKDF2_HMAC_SHA1</span><span class="crayon-sy">(</span><span class="crayon-v">pass</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-e">strlen</span><span class="crayon-sy">(</span><span class="crayon-v">pass</span><span class="crayon-sy">)</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">salt</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">salt_len</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">ic</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">16</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">result</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-42">&nbsp;</div><div class="crayon-line" id="crayon-555afad3e9d96677588444-43"><span class="crayon-h">	</span><span class="crayon-e">fwrite</span><span class="crayon-sy">(</span><span class="crayon-v">result</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">16</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">stdout</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-44">&nbsp;</div><div class="crayon-line" id="crayon-555afad3e9d96677588444-45"><span class="crayon-h">	</span><span class="crayon-st">return</span><span class="crayon-sy">(</span><span class="crayon-cn">0</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555afad3e9d96677588444-46"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0124 seconds] -->
+
+
+<p>Save the C program to a file called &#8220;<code>wa_pbkdf2.c</code>&#8221; and compile it using GCC.</code>
+
+<pre class="prettyprint">
+$ gcc -o wa_pbkdf2 wa_pbkdf2.c -lssl
+</pre>
+
+<p>If you get any errors like &#8220;<code>undefined reference to `PKCS5_PBKDF2_HMAC_SHA1'</code>&#8220;, then try linking with the <code>crypto</code> library instead of the <code>ssl</code> library.</p>
+
+<pre class="prettyprint">
+$ gcc -o wa_pbkdf2 wa_pbkdf2.c -lcrypto
+</pre>
+
+<p>GCC will create a binary called &#8220;<code>wa_pbkdf2</code>&#8220;. Now, proceed to generate the output hash from the PBKDF2 function using the C program.</p>
+
+<pre class="prettyprint">
+$ .&#47;wa_pbkdf2 pw_salt 16 &lt; pbkdf2_pass.bin &gt; pbkdf2_key.bin
+</pre>
+
+<p>We are done with step 1 of the decryption process. Step 2 involves AES OFB 128-bit decryption. We need two variables, <code>K</code> and <code>IV</code>. The input message is the encrypted key kept in the &#8220;<code>pw_ekey</code>&#8221; file. <code>K</code> can be found from the output of the <code>wa_pbkdf2</code> program. <code>IV</code> is kept in the &#8220;<code>pw_iv</code>&#8221; file. For <code>K</code> and <code>IV</code> we need the values in hex dump format. Extract the values and initialise the variables <code>$k</code> and <code>$iv</code>.</p>
+
+<pre class="prettyprint">
+$ k=$(hexdump -e &#39;2&#47;1 &#34;%02x&#34;&#39; pbkdf2_key.bin)
+$ iv=$(hexdump -e &#39;2&#47;1 &#34;%02x&#34;&#39; pw_iv)
+</pre>
+
+<p>Now, we can decrypt using <code>openssl</code>.</p>
+
+<pre class="prettyprint">
+$ openssl enc -aes-128-ofb -d -nosalt -in pw_ekey -K $k -iv $iv -out wa_password.key
+</pre>
+
+<p>The output will be saved to the file &#8220;<code>wa_password.key</code>&#8220;. To view the actual password, encode the output using <code>base64</code>.</p>
+
+<pre class="prettyprint">
+$ base64 wa_password.key
+</pre>
+
+<p>The WhatsApp passsword will be printed out.</p>
+
+<p><strong>Updated (22-Dec-2014)</strong>: Added <code>gcc</code> command to compile with <code>crypto</code> library.</p>
+
+<p><strong>Updated (14-Feb&#8211;2015)</strong>: Extracting password file using ADB Backup feature is no longer applicable.</p>
+
+<p><strong>Related</strong>: <a href="http://www.digitalinternals.com/security/decrypt-whatsapp-crypt7-database-messages/307/" class="permalink-shortcode" title="How to Decrypt WhatsApp crypt7 Database Messages">How to Decrypt WhatsApp crypt7 Database Messages</a></p>
+
+<p><strong>Related</strong>: <a href="http://www.digitalinternals.com/security/decrypt-whatsapp-crypt8-database-messages/419/" class="permalink-shortcode" title="How to Decrypt WhatsApp crypt8 Database Messages">How to Decrypt WhatsApp crypt8 Database Messages</a></p>
+
+<p><strong>Related</strong>: <a href="http://www.digitalinternals.com/security/extract-whatsapp-unencrypted-chat-messages/311/" class="permalink-shortcode" title="How to Extract Unencrypted Whatsapp Chat Messages">How to Extract Unencrypted Whatsapp Chat Messages</a></p>
+<p class="no-break"><span st_url='http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/' st_title='Extract WhatsApp Password on Android' class='st_facebook_hcount'></span><span st_url='http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/' st_title='Extract WhatsApp Password on Android' class='st_fblike_hcount'></span><span st_title='Extract WhatsApp Password on Android' st_url='http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/' class='st_googleplus_hcount'></span><span st_title='Extract WhatsApp Password on Android' st_url='http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/' class='st_plusone_hcount'></span><span st_via='digitalinternal' st_username='digitalinternal' st_title='Extract WhatsApp Password on Android' st_url='http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/' class='st_twitter_hcount'></span><span st_title='Extract WhatsApp Password on Android' st_url='http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/' class='st_linkedin_hcount'></span><span st_title='Extract WhatsApp Password on Android' st_url='http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/' class='st_email_hcount'></span></p><div id="author-bio-box" style="background: #f8f8f8; border-top: 1px dashed #cccccc; border-bottom: 1px dashed #cccccc; color: #333333"><h3><a style="color: #555555;" href="http://www.digitalinternals.com/author/ibrahim/" title="All posts by Mohamed Ibrahim" rel="author">Mohamed Ibrahim</a></h3><div class="bio-gravatar"><img alt='' src='http://1.gravatar.com/avatar/9d917ba835bec67e133426df886e3796?s=75&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D75&amp;r=G' class='avatar avatar-75 photo' height='75' width='75' /></div><a target="_blank" href="https://facebook.com/ibrahimayoob" class="bio-icon bio-icon-facebook"></a><a target="_blank" href="https://twitter.com/ibrahimayoob" class="bio-icon bio-icon-twitter"></a><a target="_blank" href="https://plus.google.com/+MohamedIbrahimAyoob" class="bio-icon bio-icon-googleplus"></a><a target="_blank" href="https://linkedin.com/in/ibrahimayoob" class="bio-icon bio-icon-linkedin"></a><p class="bio-description">Ibrahim is a (Software Engineer &amp;&amp; Mobile Telecom Network professional). A technology enthusiast with great interest in *NIX (Unix, Linux), Android and open source projects.</p></div></div>
+
+<div class="adsense-single"><div id="google-linkads-single-1"></div>     
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- di.com#single_lu_01 -->
+<script>
+ 
+/* calculate the width of available ad space */
+ad = document.getElementById('google-linkads-single-1');    
+ 
+var adWidth = (typeof ad.getBoundingClientRect === 'function') ? ad.getBoundingClientRect().width : ad.offsetWidth;    
+ 
+/* Replace ca-pub-XXX with your AdSense Publisher ID */
+google_ad_client = "ca-pub-3458162586830183";    
+
+if ( adWidth >= 728 )      google_ad_param = ["728", "15", "8766851752"]; 
+else if ( adWidth >= 468 ) google_ad_param = ["468", "15", "2720318158"]; 
+else if ( adWidth >= 200 ) google_ad_param = ["200", "90", "4197051352"]; 
+else if ( adWidth >= 180 ) google_ad_param = ["180", "90", "7150517751"]; 
+else if ( adWidth >= 160 ) google_ad_param = ["160", "90", "8627250953"]; 
+else                       google_ad_param = ["120", "90", "1103984154"];    
+ 
+document.write (
+'<ins class="adsbygoogle" style="display:inline-block;'
++ 'width:' + google_ad_param[0] + 'px;' 
++ 'height:' + google_ad_param[1] + 'px' 
++ '" data-ad-client="' + google_ad_client 
++ '" data-ad-slot="' + google_ad_param[2] 
++ '"></ins>'
+);
+(adsbygoogle = window.adsbygoogle || []).push({});
+ 
+</script>
+</div>
+
+</article>
+<!-- POST END -->
+
+
+<div class="post-nav-archive" id="post-navigator-single">
+<div class="alignleft">&laquo;&nbsp;<a href="http://www.digitalinternals.com/mobile/android-adb-backup-extract-restore-repack/372/" rel="prev">Android ADB Backup, Extract, Restore</a></div>
+<div class="alignright"><a href="http://www.digitalinternals.com/unix/unix-linux-file-permissions-octal/375/" rel="next">UNIX / Linux: File Permissions in Octal</a>&nbsp;&raquo;</div>
+</div>
+
+
+
+
+
+<div id="disqus_thread">
+            <div id="dsq-content">
+
+
+            <ul id="dsq-comments">
+                    <li class="comment even thread-even depth-1" id="dsq-comment-24449">
+        <div id="dsq-comment-header-24449" class="dsq-comment-header">
+            <cite id="dsq-cite-24449">
+                <span id="dsq-author-user-24449">Stefan Smorra</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24449" class="dsq-comment-body">
+            <div id="dsq-comment-message-24449" class="dsq-comment-message"><p>Hello Mohamed,</p>
+<p>thank you for this great guide. I wonder how you found that all out?<br />
+However, I&#8217;ve made a app that extracts your WhatsApp password if you have root.<br />
+Check it out here <a href="https://play.google.com/store/apps/details?id=com.smorra.passwordextractor" rel="nofollow">https://play.google.com/store/apps/details?id=com.smorra.passwordextractor</a></p>
+<p>Best regards</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-24418">
+        <div id="dsq-comment-header-24418" class="dsq-comment-header">
+            <cite id="dsq-cite-24418">
+http://www.digitalinternals.com/                <span id="dsq-author-user-24418">ibrahim</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24418" class="dsq-comment-body">
+            <div id="dsq-comment-message-24418" class="dsq-comment-message"><p>Hi Stefan,</p>
+<p>No problem. It was a long process of reverse engineering.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-24421">
+        <div id="dsq-comment-header-24421" class="dsq-comment-header">
+            <cite id="dsq-cite-24421">
+                <span id="dsq-author-user-24421">mbk</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24421" class="dsq-comment-body">
+            <div id="dsq-comment-message-24421" class="dsq-comment-message"><p>Great job! I have made bash script, using your guide! <a href="http://pastebin.com/TJSgTGMz" rel="nofollow">http://pastebin.com/TJSgTGMz</a> <img src="http://www.digitalinternals.com/wp-includes/images/smilies/icon_smile.gif" alt=":-)" class="wp-smiley" /></p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-24422">
+        <div id="dsq-comment-header-24422" class="dsq-comment-header">
+            <cite id="dsq-cite-24422">
+http://www.digitalinternals.com/                <span id="dsq-author-user-24422">ibrahim</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24422" class="dsq-comment-body">
+            <div id="dsq-comment-message-24422" class="dsq-comment-message"><p>Excellent! By the way, the: </p>
+<pre>
+hexdump -e '2/1 "%02x"' pw_salt
+</pre>
+<p> is not needed and can be removed from the script.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-24476">
+        <div id="dsq-comment-header-24476" class="dsq-comment-header">
+            <cite id="dsq-cite-24476">
+http://fox21.at/                <span id="dsq-author-user-24476">Christian Mayer</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24476" class="dsq-comment-body">
+            <div id="dsq-comment-message-24476" class="dsq-comment-message"><p>How big is the original pw file? On iOS there exists also a <i>pw.dat</i> (36 bytes) file in <i>net.whatsapp.WhatsApp/Library</i> when you backup your iPhone and search the backup. But I don&#8217;t know if I can use your procedure to extract the password from the iPhone backup.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-24479">
+        <div id="dsq-comment-header-24479" class="dsq-comment-header">
+            <cite id="dsq-cite-24479">
+http://www.digitalinternals.com/                <span id="dsq-author-user-24479">ibrahim</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24479" class="dsq-comment-body">
+            <div id="dsq-comment-message-24479" class="dsq-comment-message"><p>On my Android phone, the <code>pw</code> file is 69 bytes long.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-24482">
+        <div id="dsq-comment-header-24482" class="dsq-comment-header">
+            <cite id="dsq-cite-24482">
+http://fox21.at/                <span id="dsq-author-user-24482">Christian Mayer</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24482" class="dsq-comment-body">
+            <div id="dsq-comment-message-24482" class="dsq-comment-message"><p>On iOS the <i>pw.dat</i> file is too small. Don&#8217;t know if this is really the password.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-24483">
+        <div id="dsq-comment-header-24483" class="dsq-comment-header">
+            <cite id="dsq-cite-24483">
+http://www.digitalinternals.com/                <span id="dsq-author-user-24483">ibrahim</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24483" class="dsq-comment-body">
+            <div id="dsq-comment-message-24483" class="dsq-comment-message"><p>On Android, the <code>pw</code> file is in a Java serialized object format.<br />
+On IOS, I guess that the file is saved in a different format. That could explain the size difference.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-24509">
+        <div id="dsq-comment-header-24509" class="dsq-comment-header">
+            <cite id="dsq-cite-24509">
+                <span id="dsq-author-user-24509">Mali</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24509" class="dsq-comment-body">
+            <div id="dsq-comment-message-24509" class="dsq-comment-message"><p>Hey!</p>
+<p>I get this error when I try to compile the code: C:UsersMaliAppDataLocalTempccfi260N.o:wa_pbkdf2.c:(.text+0x1e3): undefined reference to `PKCS5_PBKDF2_HMAC_SHA1&#8242;<br />
+collect2.exe: error: ld returned 1 exit status</p>
+<p>What should I do? Thanks.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-24513">
+        <div id="dsq-comment-header-24513" class="dsq-comment-header">
+            <cite id="dsq-cite-24513">
+http://www.digitalinternals.com/                <span id="dsq-author-user-24513">ibrahim</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24513" class="dsq-comment-body">
+            <div id="dsq-comment-message-24513" class="dsq-comment-message"><p>Try replacing <code>-lssl</code> with <code>-lcrypto</code>:</p>
+<pre><code>
+$ gcc wa_pbkdf2.c -o wa_pbkdf2.exe -lcrypto
+</code>
+</pre>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-24520">
+        <div id="dsq-comment-header-24520" class="dsq-comment-header">
+            <cite id="dsq-cite-24520">
+                <span id="dsq-author-user-24520">Mali</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24520" class="dsq-comment-body">
+            <div id="dsq-comment-message-24520" class="dsq-comment-message"><p>Thanks. <img src="http://www.digitalinternals.com/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley" /></p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-24546">
+        <div id="dsq-comment-header-24546" class="dsq-comment-header">
+            <cite id="dsq-cite-24546">
+                <span id="dsq-author-user-24546">Max</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24546" class="dsq-comment-body">
+            <div id="dsq-comment-message-24546" class="dsq-comment-message"><p>Please tell me, where did this one set of characters:<br />
+c2991ec29b1d0cc2b8c3b7556458c298c29203c28b45c2973e78c386c395 in $ echo c2991ec29b1d0cc2b8c3b7556458c298c29203c28b45c2973e78c386c395 | xxd -r -p &gt; pbkdf2_pass.bin<br />
+It is common for all or a need to somehow generate?</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-24547">
+        <div id="dsq-comment-header-24547" class="dsq-comment-header">
+            <cite id="dsq-cite-24547">
+                <span id="dsq-author-user-24547">Diego</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24547" class="dsq-comment-body">
+            <div id="dsq-comment-message-24547" class="dsq-comment-message"><p>I think this no longer works since last update, can you confirm it?<br />
+is it possible to publish a small guide to understand how did you get it?</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-24548">
+        <div id="dsq-comment-header-24548" class="dsq-comment-header">
+            <cite id="dsq-cite-24548">
+http://www.digitalinternals.com/                <span id="dsq-author-user-24548">ibrahim</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24548" class="dsq-comment-body">
+            <div id="dsq-comment-message-24548" class="dsq-comment-message"><p>It is common for all.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-24549">
+        <div id="dsq-comment-header-24549" class="dsq-comment-header">
+            <cite id="dsq-cite-24549">
+http://www.digitalinternals.com/                <span id="dsq-author-user-24549">ibrahim</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24549" class="dsq-comment-body">
+            <div id="dsq-comment-message-24549" class="dsq-comment-message"><p>I have just tested it on pidgin client with whatsapp-purple plugin and the extracted password is working for me.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-24550">
+        <div id="dsq-comment-header-24550" class="dsq-comment-header">
+            <cite id="dsq-cite-24550">
+                <span id="dsq-author-user-24550">Diego</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24550" class="dsq-comment-body">
+            <div id="dsq-comment-message-24550" class="dsq-comment-message"><p>hello, I tried WART method + whatsapp-purple at it logins perfectly, but I tried with the password obtained through your method and it does not login yet. It worked 2/3 weeks ago but not now. I ran out of ideas.</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="dsq-comment-24551">
+        <div id="dsq-comment-header-24551" class="dsq-comment-header">
+            <cite id="dsq-cite-24551">
+http://www.digitalinternals.com/                <span id="dsq-author-user-24551">ibrahim</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24551" class="dsq-comment-body">
+            <div id="dsq-comment-message-24551" class="dsq-comment-message"><p>Are you using the ADB backup method on a non-rooted phone? This method no longer works.</p>
+<p>The method in this article actually appears in the WhatsAPI Wiki page (password extraction).</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="dsq-comment-24552">
+        <div id="dsq-comment-header-24552" class="dsq-comment-header">
+            <cite id="dsq-cite-24552">
+                <span id="dsq-author-user-24552">Diego</span>
+            </cite>
+        </div>
+        <div id="dsq-comment-body-24552" class="dsq-comment-body">
+            <div id="dsq-comment-message-24552" class="dsq-comment-message"><p>It is rooted. But today I realized I got a different password with Stefan´s application that works so is obviously I made a mistake somewhere. Sorry</p>
+</div>
+        </div>
+
+    </li><!-- #comment-## -->
+            </ul>
+
+
+        </div>
+
+    </div>
+
+<script type="text/javascript">
+var disqus_url = 'http://www.digitalinternals.com/security/extract-whatsapp-password-android/374/';
+var disqus_identifier = '374 http://www.digitalinternals.com/?p=374';
+var disqus_container_id = 'disqus_thread';
+var disqus_shortname = 'digitalinternals';
+var disqus_title = "Extract WhatsApp Password on Android";
+var disqus_config_custom = window.disqus_config;
+var disqus_config = function () {
+    /*
+    All currently supported events:
+    onReady: fires when everything is ready,
+    onNewComment: fires when a new comment is posted,
+    onIdentify: fires when user is authenticated
+    */
+    
+    
+    this.language = '';
+        this.callbacks.onReady.push(function () {
+
+        // sync comments in the background so we don't block the page
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '?cf_action=sync_comments&post_id=374';
+
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+    });
+    
+    if (disqus_config_custom) {
+        disqus_config_custom.call(this);
+    }
+};
+
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+
+
+
+
+<div class="post-nav-archive" id="post-navigator-single">
+<div class="alignleft">&laquo;&nbsp;<a href="http://www.digitalinternals.com/mobile/android-adb-backup-extract-restore-repack/372/" rel="prev">Android ADB Backup, Extract, Restore</a></div>
+<div class="alignright"><a href="http://www.digitalinternals.com/unix/unix-linux-file-permissions-octal/375/" rel="next">UNIX / Linux: File Permissions in Octal</a>&nbsp;&raquo;</div>
+</div>
+
+
+</section>
+</div>
+<!-- POST ENTRY END -->
+
+
+</div><!-- CONTENT INNER END -->
+</div><!-- CONTENT END -->
+
+
+<div id="right-sidebar" class="sidebar">
+<div class="sidebar-inner">
+<div class="widget-area the-icons">
+
+
+
+
+
+
+<aside id="text-12" class="widget widget_text">			<div class="textwidget">    <div id="google-ads-sidebar-1"></div>
+    <script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- di.com#sidebar_au_01 --> 
+    <script type="text/javascript">     
+    
+    ad = document.getElementById('google-ads-sidebar-1');
+     
+    if (ad.getBoundingClientRect().width) {
+    adWidth = ad.getBoundingClientRect().width; // for modern browsers
+    } else {
+    adWidth = ad.offsetWidth; // for old IE
+    }     
+    
+    google_ad_client = "ca-pub-3458162586830183";     
+    
+    google_ad_slot = "7322301353";
+    
+    if ( adWidth >= 336 )    
+    google_ad_size = ["336", "280"]; /* Large Rectangle (336 x 280) */
+    else if ( adWidth >= 300 )
+    google_ad_size = ["300", "250"]; /* Medium Rectangle (300 x 250) */
+    else if ( adWidth >= 250 )
+    google_ad_size = ["250", "250"]; /* Square (250 x 250) */
+    else if ( adWidth >= 200 )
+    google_ad_size = ["200", "200"]; /* Small Square (200 x 200) */
+    else if ( adWidth >= 180 )
+    google_ad_size = ["180", "150"]; /* Small Rectangle (180 x 150) */
+    else
+    google_ad_size = ["125", "125"]; /* Button (125 x 125) */
+     
+    document.write (
+    '<ins class="adsbygoogle" style="display:inline-block;width:'
+    + google_ad_size[0] + 'px;height:'
+    + google_ad_size[1] + 'px" data-ad-client="'
+    + google_ad_client + '" data-ad-slot="'
+    + google_ad_slot + '"></ins>'
+    );
+    (adsbygoogle = window.adsbygoogle || []).push({});
+     
+    </script></div>
+		</aside>
+
+    <aside id="feedburnerformwidget-2" class="widget widget_feedburnerformwidget">
+    <!-- Plugin Feedburner Form-->
+    <div class="fb-container">
+        <h3 class="widget-title">Feed Subscription</h3>        <div class="fbf-text">
+                        </div>
+        <form  class="fbf-widget" action="http://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open('http://feedburner.google.com/fb/a/mailverify?uri=digitalinternals', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true">
+        <input class="subscription_email" type="text" name="email" placeholder="" /><input type="hidden" value="digitalinternals" name="uri"/>
+        <input type="hidden" name="loc" value="en_US"/>
+        <input class="subscription_btn" type="submit" value ="Ok"/>
+        </form>
+
+        <p class="fb-credits"><a href="http://google.feedburner.com" target="_blank">Powered by &reg;Google Feedburner</a></p>
+    
+    
+    </div>
+    <!-- Plugin Feedburner Form-->
+		</aside>
+    <aside id="wpcirrus" class="widget wpcirrusWidgetInit"><h3 class="widget-title">Tag Cloud</h3>	<script type="text/javascript">
+		var wpcirrusRadiuscirrusCloudWidget = 0;
+		var wpcirrusRefreshratecirrusCloudWidget = 100;
+		var wpcirrusFontColorcirrusCloudWidget;var wpcirrusBackgroundColorcirrusCloudWidget;	</script>
+	<div style="position: relative; height: 250px; width: 300px;"  id="cirrusCloudWidget">
+		<a href='http://www.digitalinternals.com/tag/adb/' class='tag-link-214' title='5 topics' style='font-size: 10pt;'>adb</a>
+<a href='http://www.digitalinternals.com/tag/android/' class='tag-link-184' title='23 topics' style='font-size: 15.454545454545pt;'>android</a>
+<a href='http://www.digitalinternals.com/tag/dns/' class='tag-link-107' title='5 topics' style='font-size: 10pt;'>dns</a>
+<a href='http://www.digitalinternals.com/tag/facebook/' class='tag-link-124' title='6 topics' style='font-size: 10.636363636364pt;'>facebook</a>
+<a href='http://www.digitalinternals.com/tag/free/' class='tag-link-146' title='6 topics' style='font-size: 10.636363636364pt;'>free</a>
+<a href='http://www.digitalinternals.com/tag/google/' class='tag-link-52' title='6 topics' style='font-size: 10.636363636364pt;'>google</a>
+<a href='http://www.digitalinternals.com/tag/hack/' class='tag-link-237' title='16 topics' style='font-size: 14.090909090909pt;'>hack</a>
+<a href='http://www.digitalinternals.com/tag/linux/' class='tag-link-49' title='75 topics' style='font-size: 20pt;'>linux</a>
+<a href='http://www.digitalinternals.com/tag/network/' class='tag-link-34' title='6 topics' style='font-size: 10.636363636364pt;'>network</a>
+<a href='http://www.digitalinternals.com/tag/openssl/' class='tag-link-238' title='5 topics' style='font-size: 10pt;'>openssl</a>
+<a href='http://www.digitalinternals.com/tag/password/' class='tag-link-15' title='7 topics' style='font-size: 11.090909090909pt;'>password</a>
+<a href='http://www.digitalinternals.com/tag/procfs/' class='tag-link-299' title='5 topics' style='font-size: 10pt;'>procfs</a>
+<a href='http://www.digitalinternals.com/tag/programming/' class='tag-link-56' title='5 topics' style='font-size: 10pt;'>programming</a>
+<a href='http://www.digitalinternals.com/tag/security/' class='tag-link-4' title='10 topics' style='font-size: 12.363636363636pt;'>security</a>
+<a href='http://www.digitalinternals.com/tag/shell-script/' class='tag-link-29' title='27 topics' style='font-size: 16.090909090909pt;'>shell script</a>
+<a href='http://www.digitalinternals.com/tag/solaris/' class='tag-link-63' title='6 topics' style='font-size: 10.636363636364pt;'>solaris</a>
+<a href='http://www.digitalinternals.com/tag/subscription/' class='tag-link-11' title='5 topics' style='font-size: 10pt;'>subscription</a>
+<a href='http://www.digitalinternals.com/tag/unix/' class='tag-link-47' title='57 topics' style='font-size: 18.909090909091pt;'>unix</a>
+<a href='http://www.digitalinternals.com/tag/whatsapp/' class='tag-link-236' title='6 topics' style='font-size: 10.636363636364pt;'>whatsapp</a>
+<a href='http://www.digitalinternals.com/tag/windows/' class='tag-link-18' title='21 topics' style='font-size: 15.090909090909pt;'>windows</a>	</div>
+	</aside><aside id="text-4" class="widget widget_text">			<div class="textwidget"><iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fdigitalinternals&amp;width=300&amp;height=200&amp;colorscheme=light&amp;show_faces=true&amp;header=false&amp;stream=false&amp;show_border=true&amp;appId=137712009730168" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:200px;" allowTransparency="true"></iframe>
+</div>
+		</aside><aside id="text-5" class="widget widget_text">			<div class="textwidget"><!-- Place this tag where you want the widget to render. -->
+<div class="g-page" data-href="//plus.google.com/u/0/101136352073639742042" data-layout="landscape" data-rel="publisher"></div>
+
+<!-- Place this tag after the last widget tag. -->
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script></div>
+		</aside>
+</div>
+</div><!-- SIDEBAR-INNER END -->
+</div><!-- RIGHT SIDEBAR END -->
+
+	<!--wp code prettify-->
+	<script type="text/javascript">
+	function $(id) {return !id ? null : document.getElementById(id);}
+
+	loadPrettifyCss = function () {
+		if(!$('prettify_css')) {
+			css = document.createElement('link');
+			css.id = 'prettify_css';
+			css.type = 'text/css';
+			css.rel = 'stylesheet';
+			css.href = 'http://www.digitalinternals.com/wp-content/plugins/wp-code-prettify/css/prettify.css';
+			var headNode = document.getElementsByTagName("head")[0];
+			headNode.appendChild(css);
+		} else {
+			$('prettify_css').href = 'http://www.digitalinternals.com/wp-content/plugins/wp-code-prettify/css/prettify.css';
+		}
+
+		if(!$('prettify_custom')) {
+			css = document.createElement('style');
+			css.id = 'prettify_custom';
+			css.type = 'text/css';
+			css.rel = 'stylesheet';
+			css.innerHTML = 'pre.prettyprint { margin: 0px 0px 2em; padding: 10px; max-height: 300px; overflow: auto; background-color: #f8f8f8; white-space: pre; word-wrap: normal}';
+			var headNode = document.getElementsByTagName("head")[0];
+			headNode.appendChild(css);
+		} else {
+			$('prettify_css').innerHTML = 'pre.prettyprint { margin: 0px 0px 2em; padding: 10px; max-height: 300px; overflow: auto; background-color: #f8f8f8; white-space: pre; word-wrap: normal}';
+		}
+	}
+	</script>
+	<script type="text/javascript">
+		loadPrettifyCss();
+	</script>
+
+	<script type="text/javascript" src="http://www.digitalinternals.com/wp-content/plugins/wp-code-prettify/js/prettify.js"></script>
+	<script type="text/javascript">
+		function wpCodePrettifyOnLoad(func){
+			var wpCodePrettifyOldOnLoad = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func
+			} else {
+				window.onload = function () {
+					wpCodePrettifyOldOnLoad();
+					func()
+				}
+			}
+		}
+
+		wpCodePrettifyOnLoad(function(){prettyPrint();});
+	</script>
+	<!--//wp code prettify-->
+	</div><!-- CONTAINER WRAP END -->
+
+</section><!-- CONTAINER END -->
+
+</div><!-- BODYCONTENT END -->
+</div><!-- INNERWRAP BODYWRAP END -->
+
+</div><!-- WRAPPER MAIN END -->
+</div><!-- WRAPPER END -->
+
+
+<footer class="footer-top">
+<div class="innerwrap">
+<div class="ftop">
+<div class="footer-container-wrap">
+<div class="fbox">
+<div class="widget-area the-icons">
+<aside id="text-8" class="widget widget_text"><h3 class="widget-title">About</h3>			<div class="textwidget">Digital Internals is a technology site that provides articles, tutorials, tips and how-to guides. <a href="/about/">Read more</a> ...</div>
+		</aside></div>
+</div>
+
+
+<div class="fbox wider-cat">
+<div class="widget-area the-icons">
+<h3 class="widget-title">Social Networks</h3>
+
+		
+	<div class="metro-social metro-height" style="width:200px;">
+
+		<li class="metro-facebook"><iframe class="fbhover" src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fdigitalinternals&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21&amp;appId=146463002094104" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:75px; height:65px;" allowTransparency="true"></iframe></li>
+
+		<li class="googleplus-one"><div class="googlehover" styel="margin-top:10px;">
+<div class="g-follow" data-annotation="bubble" data-height="24" data-href="//plus.google.com/+digitalinternals" data-rel="publisher"></div></div><script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script></li>
+
+	        <li class="twitter-one"><a href="https://twitter.com/digitalinternal" class="twitter-follow-button twitterhover" data-show-count="true" data-show-screen-name="false">Follow @digitalinternal</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></li>
+
+ 	        <li><a class="rss-feed" target="_blank" href="http://feeds.digitalinternals.com/digitalinternals"></a></li>
+
+	</div>
+	
+        </div>
+</div>
+
+
+<div class="fbox">
+<div class="widget-area the-icons">
+<aside id="text-10" class="widget widget_text">			<div class="textwidget"></div>
+		</aside></div>
+</div>
+
+
+<div class="fbox">
+<div class="widget-area the-icons">
+<aside id="text-13" class="widget widget_text">			<div class="textwidget"></div>
+		</aside></div>
+</div>
+
+ <div>
+</div>
+</div>
+
+
+</footer><!-- FOOTER TOP END -->
+
+
+<footer class="footer-bottom">
+<div class="innerwrap">
+<div class="fbottom">
+<div class="footer-left">
+Copyright &copy; 2015. Digital Internals</div><!-- FOOTER LEFT END -->
+
+<div class="footer-right">
+	</div>
+</div>
+<!-- FOOTER RIGHT END -->
+
+</div>
+</footer><!-- FOOTER BOTTOM END -->
+
+        <script type="text/javascript">
+        // <![CDATA[
+        var disqus_shortname = 'digitalinternals';
+        (function () {
+            var nodes = document.getElementsByTagName('span');
+            for (var i = 0, url; i < nodes.length; i++) {
+                if (nodes[i].className.indexOf('dsq-postid') != -1) {
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
+                    url = nodes[i].parentNode.href.split('#', 1);
+                    if (url.length == 1) { url = url[0]; }
+                    else { url = url[1]; }
+                    nodes[i].parentNode.href = url + '#disqus_thread';
+                }
+            }
+            var s = document.createElement('script'); 
+            s.async = true;
+            s.type = 'text/javascript';
+            s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+        // ]]>
+        </script>
+        <link rel='stylesheet' id='author-bio-box-styles-css'  href='http://www.digitalinternals.com/wp-content/plugins/author-bio-box/assets/css/author-bio-box.css?ver=3.3.0' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.digitalinternals.com/wp-includes/js/hoverIntent.min.js?ver=r7'></script>
+
+<!-- Start Of Script Generated By cforms v14.6 [Oliver Seidel | www.deliciousdays.com] -->
+<!-- End Of Script Generated By cforms -->
+
+
+
+
+
+</body>
+
+</html>
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+Database Caching 7/36 queries in 0.009 seconds using xcache
+Object Caching 1848/1915 objects using xcache
+
+ Served from: www.digitalinternals.com @ 2015-05-19 16:56:52 by W3 Total Cache -->
